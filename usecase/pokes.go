@@ -1,6 +1,15 @@
 package usecase
 
-import "github.com/rociosantos/go-pokech/model"
+import (
+	// "fmt"
+	// "hash/adler32"
+
+	"fmt"
+
+	"github.com/rociosantos/go-pokech/model"
+
+	intersect "github.com/juliangruber/go-intersect"
+)
 
 type PokesUseCase struct {
 	storage PokeAPIService
@@ -37,7 +46,7 @@ func PokeUseCaseNew(
 }
 
 // GetDamages -
-func (u *PokesUseCase) GetDamages(name1 string, name2 string) (*DamageResponse, error) {
+func (u *PokesUseCase) GetDamages(name1, name2 string) (*DamageResponse, error) {
 	poke1, err := u.storage.GetPokemon(name1)
 	poke2, err := u.storage.GetPokemon(name2)
 	poke1type := poke1.Types[0].Type.Name
@@ -76,4 +85,29 @@ func (u *PokesUseCase) GetDamages(name1 string, name2 string) (*DamageResponse, 
 	
 
 	return &damageResponse, err
+}
+
+// GetMoves - 
+func (u *PokesUseCase) GetMoves(name1, name2 string) (interface{}, error) {
+	poke1, _ := u.storage.GetPokemon(name1)
+	poke2, _ := u.storage.GetPokemon(name2)
+
+	moves1 := make([]string, len(poke1.Moves))
+	moves2 := make([]string, len(poke2.Moves))
+
+	for i, m := range poke1.Moves{
+		moves1[i] = m.Move.Name
+	}
+		
+	for i, m := range poke2.Moves{
+		moves2[i] = m.Move.Name
+	}
+
+	fmt.Println(moves1)
+	fmt.Println(moves2)
+
+	a := intersect.Hash(moves1, moves2)
+
+	return a, nil
+	
 }

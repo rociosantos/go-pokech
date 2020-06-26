@@ -16,6 +16,7 @@ type HealthController interface {
 // PokesController for monitoring health of our app
 type PokesController interface {
 	GetDamages(w http.ResponseWriter, r *http.Request)
+	GetMoves(w http.ResponseWriter, r *http.Request)
 }
 
 // Setup returns router instance which is used in main package to register handlers.
@@ -28,6 +29,7 @@ func Setup(
 
 	r.HandleFunc("/healthz", healthController.IsHealthy).Methods(http.MethodGet).Name("healthz")
 	r.HandleFunc("/pokes/{poke1}/damages/{poke2}", pokesController.GetDamages).Methods("GET").Name("get-damages")
+	r.HandleFunc("/pokes/{poke1}/moves/{poke2}", pokesController.GetMoves).Methods("GET").Name("get-damages")
 
 	return r
 }

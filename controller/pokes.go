@@ -13,6 +13,7 @@ import (
 // PokesUseCase interface, handles every key flow
 type PokesUseCase interface {
 	GetDamages(string, string) (*usecase.DamageResponse, error)
+	GetMoves(name1, name2 string) (interface{}, error)
 }
 
 // Pokes controller struct
@@ -46,4 +47,21 @@ func (p *Pokes) GetDamages(w http.ResponseWriter, r *http.Request){
 	}
 
 	p.render.JSON(w, http.StatusOK, damage)
+}
+
+func (p *Pokes) GetMoves(w http.ResponseWriter, r *http.Request){
+	pathParams := mux.Vars(r)
+	poke1 := pathParams["poke1"]
+	poke2 := pathParams["poke2"]
+
+	p.logger.WithField("func","Get moves").Info("in")
+
+	moves, err := p.useCase.GetMoves(poke1, poke2)
+	if err != nil {
+		p.logger.WithError(err).Error("getting damage")
+		p.render.JSON(w, http.StatusNotFound, nil)
+		return
+	}
+
+	p.render.JSON(w, http.StatusOK, moves)
 }
