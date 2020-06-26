@@ -3,7 +3,7 @@ package controller
 import (
 	"net/http"
 
-	"github.com/rociosantos/go-pokech/model"
+	"github.com/rociosantos/go-pokech/usecase"
 
 	"github.com/gorilla/mux"
 	"github.com/sirupsen/logrus"
@@ -12,7 +12,7 @@ import (
 
 // PokesUseCase interface, handles every key flow
 type PokesUseCase interface {
-	GetDamages(string) (*model.PokemonDamage, error)
+	GetDamages(string, string) (*usecase.DamageResponse, error)
 }
 
 // Pokes controller struct
@@ -34,11 +34,11 @@ func NewPokes(
 func (p *Pokes) GetDamages(w http.ResponseWriter, r *http.Request){
 	pathParams := mux.Vars(r)
 	poke1 := pathParams["poke1"]
-	// poke2 := pathParams["poke2"]
+	poke2 := pathParams["poke2"]
 
 	p.logger.WithField("func","Get damages").Info("in")
 
-	damage, err := p.useCase.GetDamages(poke1)
+	damage, err := p.useCase.GetDamages(poke1, poke2)
 	if err != nil {
 		p.logger.WithError(err).Error("getting damage")
 		p.render.JSON(w, http.StatusNotFound, nil)
@@ -46,5 +46,4 @@ func (p *Pokes) GetDamages(w http.ResponseWriter, r *http.Request){
 	}
 
 	p.render.JSON(w, http.StatusOK, damage)
-
 }

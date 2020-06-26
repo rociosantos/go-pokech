@@ -18,7 +18,13 @@ type PokemonDamage struct {
 			Name string `json:"name"`
 			URL  string `json:"url"`
 		} `json:"half_damage_to"`
-		NoDamageFrom []interface{} `json:"no_damage_from"`
-		NoDamageTo   []interface{} `json:"no_damage_to"`
+		NoDamageFrom []struct {
+			Name string `json:"name"`
+			URL  string `json:"url"`
+		} `json:"no_damage_from"`
+		NoDamageTo []struct {
+			Name string `json:"name"`
+			URL  string `json:"url"`
+		} `json:"no_damage_to"`
 	} `json:"damage_relations"`
 }
