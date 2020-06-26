@@ -1,0 +1,7 @@
+region: local
+http_port: 8085
+app_name: poke-challenge
+environment: development
+log_level: debug
+poke_api_host: https://pokeapi.co/api/v2/
+poke_api_timeout: 10s
