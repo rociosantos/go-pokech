@@ -1,7 +1,6 @@
 package usecase
 
 import (
-	"fmt"
 
 	"github.com/rociosantos/go-pokech/model"
 
@@ -110,9 +109,6 @@ func (u *PokesUseCase) GetMoves(name1, name2 string) (interface{}, error) {
 	for i, m := range poke2.Moves {
 		moves2[i] = m.Move.Name
 	}
-
-	fmt.Println(moves1)
-	fmt.Println(moves2)
 
 	a := intersect.Hash(moves1, moves2)
 
