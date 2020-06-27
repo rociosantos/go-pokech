@@ -17,3 +17,7 @@ deps:
 mocks:
 	@echo "::: generating mocks"
 	go generate -x ./...
+
+.PHONY: run
+run:
+	go run main.go
