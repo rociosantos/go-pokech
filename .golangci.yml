@@ -1,0 +1,43 @@
+run:
+  skip-dirs:
+    - vendor
+    - tmp
+    - build
+    - pkg
+    - .git
+    - .vscode
+    - mocks
+
+# all available settings of specific linters
+linters-settings:
+  lll:
+    # max line length, lines longer will be reported.
+    # '\t' is counted as 1 character by default, and can be changed with the tab-width option
+    line-length: 100
+    tab-width: 4
+
+linters:
+  enable:
+    - megacheck
+    - golint
+    - gosec
+    - unconvert
+    - goconst
+    - gocyclo
+    - gofmt
+    - depguard
+    - misspell
+    - nakedret
+    - gocritic
+    - lll
+
+  enable-all: false
+  disable:
+    - errcheck
+    - govet
+
+issues: 
+  exclude-rules:
+    - linters:
+        - lll
+      source: "^//go:generate "

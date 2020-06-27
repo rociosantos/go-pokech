@@ -12,16 +12,16 @@ import (
 )
 
 type Service struct {
-	client   *resty.Client
+	client *resty.Client
 }
 
 const (
 	pokemonEndpoint = "/pokemon/{name}"
-	typeEndpoint = "/type/{name}"
+	typeEndpoint    = "/type/{name}"
 )
 
-// NewPokeApi - Creates a new Pokes API Client
-func NewPokeApi(
+// NewPokeAPI - Creates a new Pokes API Client
+func NewPokeAPI(
 	host string,
 	timeout time.Duration,
 ) *Service {
@@ -33,13 +33,13 @@ func NewPokeApi(
 				return nil
 			}
 			return errors.New(strconv.Itoa(r.StatusCode()))
-			
+
 		})
 
 	return &Service{client}
 }
 
-//GetPokemon - 
+//GetPokemon -
 func (s *Service) GetPokemon(name string) (*model.Pokemon, error) {
 	response, err := s.client.R().
 		SetPathParams(map[string]string{"name": name}).
@@ -58,7 +58,7 @@ func (s *Service) GetPokemon(name string) (*model.Pokemon, error) {
 	return &poke, nil
 }
 
-//GetPokemonType - 
+//GetPokemonType -
 func (s *Service) GetPokemonType(typeName string) (*model.PokemonDamage, error) {
 	response, err := s.client.R().
 		SetPathParams(map[string]string{"name": typeName}).

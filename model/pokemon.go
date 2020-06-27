@@ -1,10 +1,10 @@
 package model
 
 type Pokemon struct {
-	Height                 int           `json:"height"`
-	ID                     int           `json:"id"`
-	IsDefault              bool          `json:"is_default"`
-	LocationAreaEncounters string        `json:"location_area_encounters"`
+	Height                 int    `json:"height"`
+	ID                     int    `json:"id"`
+	IsDefault              bool   `json:"is_default"`
+	LocationAreaEncounters string `json:"location_area_encounters"`
 	Moves                  []struct {
 		Move struct {
 			Name string `json:"name"`

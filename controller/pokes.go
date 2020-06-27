@@ -18,9 +18,9 @@ type PokesUseCase interface {
 
 // Pokes controller struct
 type Pokes struct {
-	useCase  PokesUseCase
-	logger   *logrus.Logger
-	render   *render.Render
+	useCase PokesUseCase
+	logger  *logrus.Logger
+	render  *render.Render
 }
 
 // NewPokes returns a pokes controller
@@ -32,12 +32,12 @@ func NewPokes(
 	return &Pokes{u, logger, r}
 }
 
-func (p *Pokes) GetDamages(w http.ResponseWriter, r *http.Request){
+func (p *Pokes) GetDamages(w http.ResponseWriter, r *http.Request) {
 	pathParams := mux.Vars(r)
 	poke1 := pathParams["poke1"]
 	poke2 := pathParams["poke2"]
 
-	p.logger.WithField("func","Get damages").Info("in")
+	p.logger.WithField("func", "Get damages").Info("in")
 
 	damage, err := p.useCase.GetDamages(poke1, poke2)
 	if err != nil {
@@ -49,12 +49,12 @@ func (p *Pokes) GetDamages(w http.ResponseWriter, r *http.Request){
 	p.render.JSON(w, http.StatusOK, damage)
 }
 
-func (p *Pokes) GetMoves(w http.ResponseWriter, r *http.Request){
+func (p *Pokes) GetMoves(w http.ResponseWriter, r *http.Request) {
 	pathParams := mux.Vars(r)
 	poke1 := pathParams["poke1"]
 	poke2 := pathParams["poke2"]
 
-	p.logger.WithField("func","Get moves").Info("in")
+	p.logger.WithField("func", "Get moves").Info("in")
 
 	moves, err := p.useCase.GetMoves(poke1, poke2)
 	if err != nil {

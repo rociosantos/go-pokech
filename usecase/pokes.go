@@ -1,9 +1,6 @@
 package usecase
 
 import (
-	// "fmt"
-	// "hash/adler32"
-
 	"fmt"
 
 	"github.com/rociosantos/go-pokech/model"
@@ -16,16 +13,16 @@ type PokesUseCase struct {
 }
 
 type DamageResponse struct {
-	Pokemon1       PokemonResponse
-	Pokemon2       PokemonResponse
-	Damage 		DamageResult
+	Pokemon1 PokemonResponse
+	Pokemon2 PokemonResponse
+	Damage   DamageResult
 }
 
 type PokemonResponse struct {
 	Name string `json:"name"`
 	Type string `json:"type"`
 }
-type DamageResult struct{
+type DamageResult struct {
 	DoubleDamageTo bool `json:"double_damage_to`
 	HalfDamageFrom bool `json:"half_damage_from`
 	NoDamageFrom   bool `json:"no_damage_from`
@@ -48,7 +45,13 @@ func PokeUseCaseNew(
 // GetDamages -
 func (u *PokesUseCase) GetDamages(name1, name2 string) (*DamageResponse, error) {
 	poke1, err := u.storage.GetPokemon(name1)
+	if err != nil {
+		return nil, err
+	}
 	poke2, err := u.storage.GetPokemon(name2)
+	if err != nil {
+		return nil, err
+	}
 	poke1type := poke1.Types[0].Type.Name
 	poke2type := poke2.Types[0].Type.Name
 
@@ -82,24 +85,29 @@ func (u *PokesUseCase) GetDamages(name1, name2 string) (*DamageResponse, error) 
 			break
 		}
 	}
-	
 
 	return &damageResponse, err
 }
 
-// GetMoves - 
+// GetMoves -
 func (u *PokesUseCase) GetMoves(name1, name2 string) (interface{}, error) {
-	poke1, _ := u.storage.GetPokemon(name1)
-	poke2, _ := u.storage.GetPokemon(name2)
+	poke1, err := u.storage.GetPokemon(name1)
+	if err != nil {
+		return nil, err
+	}
+	poke2, err := u.storage.GetPokemon(name2)
+	if err != nil {
+		return nil, err
+	}
 
 	moves1 := make([]string, len(poke1.Moves))
 	moves2 := make([]string, len(poke2.Moves))
 
-	for i, m := range poke1.Moves{
+	for i, m := range poke1.Moves {
 		moves1[i] = m.Move.Name
 	}
-		
-	for i, m := range poke2.Moves{
+
+	for i, m := range poke2.Moves {
 		moves2[i] = m.Move.Name
 	}
 
@@ -109,5 +117,5 @@ func (u *PokesUseCase) GetMoves(name1, name2 string) (interface{}, error) {
 	a := intersect.Hash(moves1, moves2)
 
 	return a, nil
-	
+
 }

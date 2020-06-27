@@ -9,13 +9,13 @@ import (
 
 // Health for monitoring health of our app
 type Health interface {
-	IsHealthy() 
+	IsHealthy()
 }
 
 // HealthController for monitoring health of our app
 type HealthController struct {
-	logger   *logrus.Logger
-	render   *render.Render
+	logger *logrus.Logger
+	render *render.Render
 }
 
 // NewHealthController returns a playback_rights controller

@@ -33,8 +33,7 @@ func main() {
 		log.Fatal("creating logger: %w", err)
 	}
 
-
-	pokeService := service.NewPokeApi(cfg.PokeAPIHost, cfg.PokeAPITimeout)
+	pokeService := service.NewPokeAPI(cfg.PokeAPIHost, cfg.PokeAPITimeout)
 
 	pokeUseCase := usecase.PokeUseCaseNew(pokeService)
 
@@ -45,7 +44,7 @@ func main() {
 
 	// Setup application routes
 	httpRouter := router.Setup(
-		healthController,		
+		healthController,
 		pokeController,
 		cfg,
 	)
@@ -54,7 +53,7 @@ func main() {
 		WithField("bind_address", cfg.HTTPPort).
 		Info("starting server")
 	err = http.ListenAndServe(":"+cfg.HTTPPort, httpRouter)
-	if err != nil{
+	if err != nil {
 		logger.
 			WithError(err).
 			Fatal("starting server")

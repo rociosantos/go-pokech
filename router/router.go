@@ -28,9 +28,10 @@ func Setup(
 	r := mux.NewRouter(mux.WithServiceName(cfg.AppName))
 
 	r.HandleFunc("/healthz", healthController.IsHealthy).Methods(http.MethodGet).Name("healthz")
-	r.HandleFunc("/pokes/{poke1}/damages/{poke2}", pokesController.GetDamages).Methods("GET").Name("get-damages")
-	r.HandleFunc("/pokes/{poke1}/moves/{poke2}", pokesController.GetMoves).Methods("GET").Name("get-damages")
+	r.HandleFunc("/pokes/{poke1}/damages/{poke2}", pokesController.GetDamages).
+		Methods("GET").Name("get-damages")
+	r.HandleFunc("/pokes/{poke1}/moves/{poke2}", pokesController.GetMoves).Methods("GET").
+		Name("get-damages")
 
 	return r
 }
-
