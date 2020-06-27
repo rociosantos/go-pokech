@@ -27,3 +27,10 @@ jobs:
 
     - name: Test
       run: go test -v ./...
+      
+    - name: Build docker image
+      run: docker build --tag chiosantos/pokech .     
+      
+    - name: Docker push to registry
+      run: docker push chiosantos/pokech
+      
